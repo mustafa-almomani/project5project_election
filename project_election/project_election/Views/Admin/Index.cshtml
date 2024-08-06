@@ -1,0 +1,126 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+@model IEnumerable<project_election.Models.Ad>
+
+@{
+    ViewBag.Title = "Admin Dashboard";
+    Layout = "~/Views/Shared/_Layout1.cshtml"; 
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+}
+
+<h2>Admin Dashboard</h2>
+
+<div class="container mt-5">
+    <h3>Admin Dashboard</h3>
+    <form id="bulkActionForm" method="post" action="@Url.Action("BulkAction", "Admin")">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="selectAll"></th>
+                    <th>Title</th>
+                    <th>Candidate Name</th>
+                    <th>Type</th>
+                    <th>Content</th>
+                    <th>URL Path</th>
+                    <th>Admin Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var ad in Model)
+                {
+                    <tr>
+                        <td><input type="checkbox" name="selectedIds" value="@ad.AdID" class="select-row"></td>
+                        <td>@ad.Title</td>
+                        <td>@ad.CandidateName</td>
+                        <td>@ad.Type</td>
+                        <td>@ad.Content</td>
+                        <td>@ad.URLPath</td>
+                        <td>
+                            <textarea name="adminComments[@ad.AdID]" class="form-control mb-2" placeholder="Admin comment (optional)"></textarea>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <input type="hidden" id="bulkActionType" name="action" value="">
+        <button type="button" id="approveSelected" class="btn btn-success btn-sm">Approve Selected</button>
+        <button type="button" id="rejectSelected" class="btn btn-danger btn-sm">Reject Selected</button>
+    </form>
+</div>
+
+<style>
+    /* Style for the table headers */
+    .table th {
+        font-weight: 600;
+        background-color: #f8f9fa; /* Light grey background */
+        text-align: left;
+    }
+
+    /* Style for the table rows */
+    .table td {
+        vertical-align: middle;
+    }
+
+    /* Style for the action buttons */
+    .btn-success {
+        background-color: green;
+        border-color: green;
+    }
+
+    .btn-danger {
+        background-color: red;
+        border-color: red;
+    }
+
+    .btn {
+        width: 150px;
+        margin-right: 10px;
+    }
+
+    .table textarea {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .container h3 {
+        font-size: 1.5rem;
+        font-weight: 500;
+        margin-bottom: 20px;
+    }
+
+    /* Style for the select all checkbox */
+    #selectAll {
+        margin: 0;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const selectAllCheckbox = document.getElementById("selectAll");
+        const rowCheckboxes = document.querySelectorAll(".select-row");
+        const approveSelectedButton = document.getElementById("approveSelected");
+        const rejectSelectedButton = document.getElementById("rejectSelected");
+        const bulkActionForm = document.getElementById("bulkActionForm");
+        const bulkActionType = document.getElementById("bulkActionType");
+
+        selectAllCheckbox.addEventListener("change", function () {
+            rowCheckboxes.forEach(checkbox => checkbox.checked = selectAllCheckbox.checked);
+        });
+
+        approveSelectedButton.addEventListener("click", function () {
+            bulkActionType.value = "Approve";
+            bulkActionForm.submit();
+        });
+
+        rejectSelectedButton.addEventListener("click", function () {
+            bulkActionType.value = "Reject";
+            bulkActionForm.submit();
+        });
+    });
+</script>
+
+

@@ -1,0 +1,124 @@
+﻿@model IEnumerable<project_election.Models.LocalList>
+
+@{
+    ViewBag.Title = "Lists";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Lists</title>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700|Raleway:300,400,500,700">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- Leave those next 4 lines if you care about users using IE8 -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        body {
+            background-color: #eee;
+        }
+
+        .table {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+            .table td, .table th {
+                vertical-align: middle;
+            }
+
+        .badge span {
+            background-color: #fffbec;
+            width: 60px;
+            height: 25px;
+            padding-bottom: 3px;
+            border-radius: 5px;
+            display: flex;
+            color: #fed85d;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .progress {
+            height: 10px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        .progress-bar {
+            background-color: red;
+        }
+
+        .text1 {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .text2 {
+            color: #a5aec0;
+        }
+
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+            .btn-custom:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="container mt-5 mb-3">
+        <h2>Lists</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Status</th>
+                    <th>List Name</th>
+                    <th>Votes</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><div class="badge"><span>@item.Sucess</span></div></td>
+                        <td>@item.ListName</td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: @((item.NumberOfVotes / 50.0) * 100)%" aria-valuenow="@item.NumberOfVotes" aria-valuemin="0" aria-valuemax="50"></div>
+                            </div>
+                            <div class="text1">@item.NumberOfVotes <span class="text2"> of 50 capacity</span></div>
+                        </td>
+                        <td><a href="@Url.Action("CandidatesAdmin", "Result", new { id = item.ID })" class="btn-custom">View Details</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Including Bootstrap JS (with its jQuery dependency) so that dynamic components work -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</body>
+</html>

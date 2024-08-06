@@ -1,0 +1,136 @@
+﻿@model IEnumerable<project_election.Models.GeneralListing>
+@{
+    ViewBag.Title = "GeneralList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700|Raleway:300,400,500,700">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- Leave those next 4 lines if you care about users using IE8 -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        body {
+            background-color: #eee;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+        }
+
+        .c-details span {
+            font-weight: 300;
+            font-size: 13px;
+        }
+
+        .icon {
+            width: 50px;
+            height: 50px;
+            background-color: #eee;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 39px;
+        }
+
+        .badge span {
+            background-color: #fffbec;
+            width: 60px;
+            height: 25px;
+            padding-bottom: 3px;
+            border-radius: 5px;
+            display: flex;
+            color: #fed85d;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .progress {
+            height: 10px;
+            border-radius: 10px;
+        }
+
+            .progress div {
+                background-color: red;
+            }
+
+        .text1 {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .text2 {
+            color: #a5aec0;
+        }
+
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+            .btn-custom:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+
+    <h2>Lists</h2>
+
+    <div class="container mt-5 mb-3">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card p-3 mb-2">
+                        <div class="d-flex justify-content-between">
+                            <div class="badge"> <span>@((item.Sucess==true)?"Sucess":"Fail")</span> </div>
+                        </div>
+                        <div class="mt-5">
+                            <h3 class="heading">@item.Name</h3>
+                            <div class="mt-5">
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: @item.NumberOfVotes" aria-valuenow="@item.NumberOfVotes" aria-valuemin="0" aria-valuemax="50"></div>
+                                </div>
+                                <div class="mt-3"> <span class="text1">@item.NumberOfVotes Votes</span> </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <a href="@Url.Action("GeneralListCandidates", "Result", new { id = item.GeneralListingID })" class="btn-custom">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Including Bootstrap JS (with its jQuery dependency) so that dynamic components work -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</body>
+</html>
+

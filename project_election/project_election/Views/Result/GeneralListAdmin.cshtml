@@ -1,0 +1,98 @@
+﻿@model IEnumerable<project_election.Models.GeneralListing>
+
+@{
+    ViewBag.Title = "GeneralList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Optional custom styles -->
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+        .table th, .table td {
+            vertical-align: middle;
+        }
+
+        .progress-bar {
+            height: 10px;
+            border-radius: 10px;
+        }
+
+        .badge-success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .badge-fail {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            font-size: 0.875rem;
+        }
+
+            .btn-custom:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="container mt-4">
+        <h2 class="mb-4">Lists</h2>
+        <table class="table table-striped table-hover bg-white">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Status</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Votes</th>
+                    <th scope="col">Capacity</th>
+                    <th scope="col">Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <span class="badge @(item.Sucess ? "badge-success" : "badge-fail")">
+                                @((item.Sucess ? "Success" : "Fail"))
+                            </span>
+                        </td>
+                        <td>@item.Name</td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: @((item.NumberOfVotes / 50.0) * 100)%" aria-valuenow="@item.NumberOfVotes" aria-valuemin="0" aria-valuemax="50"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <span>@item.NumberOfVotes</span>
+                            <span class="text-muted"> of 50 capacity</span>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("GeneralListCandidatesAdmin", "Result", new { id = item.GeneralListingID })" class="btn-custom">View Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

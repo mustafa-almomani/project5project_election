@@ -1,0 +1,152 @@
+﻿@model project_election.Models.ContactFormModel
+
+@{
+    ViewBag.Title = "Contact";
+    Layout = null;
+}
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>GovtPress - Municipal and Government HTML5 Template</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="manifest" href="https://devsnews.com/template/govtpress/govtpress/site.webmanifest/" />
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico" />
+    <!-- Place favicon.ico in the root directory -->
+    <!-- CSS here -->
+    <link rel="stylesheet" href="~/Content/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/assets/css/owl.carousel.min.css" />
+    <link rel="stylesheet" href="/Content/assets/css/animate.css" />
+    <link rel="stylesheet" href="/Content/assets/css/magnific-popup.css" />
+    <link rel="stylesheet" href="/Content/assets/css/all.min.css" />
+    <link rel="stylesheet" href="/Content/assets/css/flaticon.css" />
+    <link rel="stylesheet" href="/Content/assets/css/font.css" />
+    <link rel="stylesheet" href="/Content/assets/css/themify-icons.css" />
+    <link rel="stylesheet" href="/Content/assets/css/metisMenu.css" />
+    <link rel="stylesheet" href="/Content/assets/css/nice-select.css" />
+    <link rel="stylesheet" href="/Content/assets/css/slick.css" />
+    <link rel="stylesheet" href="/Content/assets/css/main.css" />
+
+    <style>
+        .main-menu ul li > a {
+            color: #000000;
+            font-size: 14px;
+            line-height: 1;
+            font-family: "Roboto", sans-serif;
+            padding: 40px 0;
+            display: inline-block;
+            position: relative;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<main aria-labelledby="title">
+    <!--contact-box-area start-->
+    <section class="contact-box-area pt-40 pb-70">
+        <div class="container" style="margin-top: 10em">
+            <div class="row">
+                <div class="col-xl-4 col-lg-4 col-md-4">
+                    <div class="contacts text-center mb-30 pt-50 pb-45">
+                        <div class="contacts__icon mb-35">
+                            <i class="flaticon-call"></i>
+                        </div>
+                        <div class="contacts__list">
+                            <h3 class="mb-15">Phone Number</h3>
+                            <ul class="contact__list--item">
+                                <li>+098 098 098 98</li>
+                                <li>098-098-098-90</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-4">
+                    <div class="contacts contacts-02 text-center mb-30 pt-50 pb-45">
+                        <div class="contacts__icon mb-35">
+                            <i class="flaticon-email-1"></i>
+                        </div>
+                        <div class="contacts__list">
+                            <h3 class="mb-15">Email Address</h3>
+                            <ul class="contact__list--item">
+                                <li>
+                                    <a href="https://www.devsnews.com/cdn-cgi/l/email-protection"
+                                       class="__cf_email__"
+                                       data-cfemail="036a6d656c437466616e626a6f2d606c6e">[email&#160;protected]</a>
+                                </li>
+                                <li>
+                                    <a href="https://www.devsnews.com/cdn-cgi/l/email-protection"
+                                       class="__cf_email__"
+                                       data-cfemail="dab0b5b8a99aadbfb8bfa2bbb7aab6bff4b9b5b7">[email&#160;protected]</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg=4 col-md-4">
+                    <div class="contacts contacts-03 text-center mb-30 pt-50 pb-45">
+                        <div class="contacts__icon mb-35">
+                            <i class="flaticon-map"></i>
+                        </div>
+                        <div class="contacts__list">
+                            <h3 class="mb-15">Office Address</h3>
+                            <ul class="contact__list--item">
+                                <li>16/A, Miranda Halim City</li>
+                                <li>New York, US</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--contact-box-area end-->
+    <!--subscribe-details-area- start-->
+    <section class="subscribe-details-area subscribe-details-03 pt-70 pb-100">
+        <div class="container">
+            <div class="sub-bg-04 white-bg pt-70 pb-50 mr-50 ml-50">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-12">
+                        @using (Html.BeginForm("Contact", "Home", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="registration-form pr-70 pl-70">
+                                <div class="row">
+                                    <div class="col-xl-6 col-lg-6 col-md-6">
+                                        <div class="input-text mb-30">
+                                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Enter your name" })
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6">
+                                        <div class="input-text input-mail mb-30">
+                                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Enter email address" })
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12">
+                                        <div class="input-text message-text mb-30">
+                                            @Html.TextAreaFor(model => model.Message, new { @class = "form-control", placeholder = "Select Subject", cols = 30, rows = 5 })
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12 col-lg-12">
+                                        <div class="subsribe-btn text-center">
+                                            <button type="submit" class="sub-btn2">
+                                                Subscribe Now <i class="fal fa-paper-plane"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--subscribe-details-area- end-->
+</main>
+
+@section Scripts {
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/js/main.js"></script>
+}

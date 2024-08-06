@@ -1,0 +1,233 @@
+﻿@model List<project_election.Models.GeneralListCandidate>
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "GeneralListCandidates", FormMethod.Post, new { id = "candidateForm" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="ListName" value="@ViewBag.listname" />
+
+    <section class="h-100 bg-dark">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col">
+                    <div class="card card-registration my-4">
+                        <div class="card-body p-md-5 text-black">
+                            <h3 class="mb-5 text-uppercase">نموذج تسجيل المرشح</h3>
+                            <div id="candidates-container">
+                                <!-- هنا سيتم إضافة نماذج المرشحين -->
+                            </div>
+                            <button type="button" class="btn btn-secondary btn-lg" id="add-candidate">إضافة مرشح</button>
+                            <button type="submit" class="btn btn-primary btn-lg">إرسال</button>
+                            <p id="error-message" class="text-danger mt-3" style="display: none;">يجب إدخال 4 مرشحين على الأقل.</p>
+                            <p id="error-type-message" class="text-danger mt-3" style="display: none;">لا يمكنك إضافة أكثر من مرشح من نوع كوتا أو مسيحي.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+@*@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        let candidateIndex = 0;
+
+        function createCandidateForm(index) {
+            return `
+                        <div class="candidate-form" data-index="${index}">
+                            <div class="form-group">
+                                <label for="Candidates_${index}__CandidateName" class="control-label col-md-2">اسم المرشح</label>
+                                <div class="col-md-10">
+                                    <input type="text" name="Candidates[${index}].CandidateName" class="form-control" required />
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                  <br>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-danger btn-sm remove-candidate">حذف المرشح</button>
+                            <hr />
+                        </div>
+                    `;
+        }
+
+        function addCandidateForm() {
+            const container = document.getElementById('candidates-container');
+            const formHtml = createCandidateForm(candidateIndex);
+            container.insertAdjacentHTML('beforeend', formHtml);
+            candidateIndex++;
+        }
+
+        function removeCandidateForm(event) {
+            if (event.target.classList.contains('remove-candidate')) {
+                const candidateForm = event.target.closest('.candidate-form');
+                candidateForm.remove();
+            }
+        }
+
+        document.getElementById('add-candidate').addEventListener('click', addCandidateForm);
+        document.getElementById('candidates-container').addEventListener('click', removeCandidateForm);
+
+        // Adding initial candidate form
+        addCandidateForm();
+    </script>*@
+
+
+
+
+
+@section Scripts {
+    <script>
+        let candidateIndex = 0;
+        let kotaUsed = false;
+        let christianUsed = false;
+
+        function createCandidateForm(index) {
+            return `
+                        <div class="candidate-form" data-index="${index}">
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div data-mdb-input-init class="form-outline">
+                                        <input type="text" name="[${index}].NationalNumber" class="form-control form-control-lg national-number" required onblur="fetchUserData(this)" />
+                                        <label class="form-label">الرقم الوطني</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="candidate-details" style="display: none;">
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div data-mdb-input-init class="form-outline">
+                                            <input type="text" name="[${index}].CandidateName" class="form-control form-control-lg" readonly />
+                                            <label class="form-label">اسم المرشح</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div data-mdb-input-init class="form-outline">
+                                            <input type="text" name="[${index}].ElectionArea" class="form-control form-control-lg" readonly />
+                                            <label class="form-label">منطقة الانتخابات</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div data-mdb-input-init class="form-outline">
+                                            <input type="text" name="[${index}].Governorate" class="form-control form-control-lg" readonly />
+                                            <label class="form-label">المحافظة</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div data-mdb-input-init class="form-outline">
+                                            <input type="text" name="[${index}].Gender" class="form-control form-control-lg" readonly />
+                                            <label class="form-label">الجنس</label>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                            <button type="button" class="btn btn-danger btn-sm remove-candidate">حذف المرشح</button>
+                            <hr />
+                        </div>
+                    `;
+        }
+
+        function addCandidateForm() {
+            if (kotaUsed && christianUsed) {
+                document.getElementById('error-type-message').style.display = 'block';
+                return;
+            }
+
+            document.getElementById('error-type-message').style.display = 'none';
+            const container = document.getElementById('candidates-container');
+            const formHtml = createCandidateForm(candidateIndex);
+            container.insertAdjacentHTML('beforeend', formHtml);
+            candidateIndex++;
+        }
+
+        function removeCandidateForm(event) {
+            if (event.target.classList.contains('remove-candidate')) {
+                const candidateForm = event.target.closest('.candidate-form');
+                const candidateType = candidateForm.querySelector('input[name$=".TypeOfCandidates"]:checked');
+
+                if (candidateType) {
+                    if (candidateType.value === "كوتا") {
+                        kotaUsed = false;
+                    } else if (candidateType.value === "مسيحي") {
+                        christianUsed = false;
+                    }
+                }
+
+                candidateForm.remove();
+            }
+        }
+
+        function fetchUserData(input) {
+            const index = input.closest('.candidate-form').getAttribute('data-index');
+            const nationalNumber = input.value;
+            if (nationalNumber) {
+                fetch(`/LocalListCandidates/GetUserData?nationalNumber=${nationalNumber}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data) {
+                            document.querySelector(`input[name='[${index}].CandidateName']`).value = data.FullName || '';
+                            document.querySelector(`input[name='[${index}].ElectionArea']`).value = data.ElectionArea || '';
+                            document.querySelector(`input[name='[${index}].Governorate']`).value = data.Governorate || '';
+                            document.querySelector(`input[name='[${index}].Gender']`).value = data.Gender || '';
+                            document.querySelector(`.candidate-form[data-index='${index}'] .candidate-details`).style.display = 'block';
+                        } else {
+                            document.querySelector(`input[name='[${index}].CandidateName']`).value = '';
+                            document.querySelector(`input[name='[${index}].ElectionArea']`).value = '';
+                            document.querySelector(`input[name='[${index}].Governorate']`).value = '';
+                            document.querySelector(`input[name='[${index}].Gender']`).value = '';
+                            document.querySelector(`.candidate-form[data-index='${index}'] .candidate-details`).style.display = 'none';
+                        }
+                    });
+            } else {
+                document.querySelector(`input[name='[${index}].CandidateName']`).value = '';
+                document.querySelector(`input[name='[${index}].ElectionArea']`).value = '';
+                document.querySelector(`input[name='[${index}].Governorate']`).value = '';
+                document.querySelector(`input[name='[${index}].Gender']`).value = '';
+                document.querySelector(`.candidate-form[data-index='${index}'] .candidate-details`).style.display = 'none';
+            }
+        }
+
+        document.getElementById('add-candidate').addEventListener('click', addCandidateForm);
+        document.getElementById('candidates-container').addEventListener('click', removeCandidateForm);
+
+        document.getElementById('candidateForm').addEventListener('submit', function (event) {
+            const candidateCount = document.querySelectorAll('.candidate-form').length;
+            if (candidateCount < 4) {
+                event.preventDefault();
+                document.getElementById('error-message').style.display = 'block';
+            } else {
+                document.getElementById('error-message').style.display = 'none';
+            }
+
+            // تحقق من وجود مرشح كوتا أو مسيحي مكرر
+            const kotaCount = document.querySelectorAll('input[type="radio"][value="كوتا"]:checked').length;
+            const christianCount = document.querySelectorAll('input[type="radio"][value="مسيحي"]:checked').length;
+            if (kotaCount > 1 || christianCount > 1) {
+                event.preventDefault();
+                document.getElementById('error-type-message').style.display = 'block';
+            } else {
+                document.getElementById('error-type-message').style.display = 'none';
+            }
+        });
+
+        // Adding initial candidate form
+        addCandidateForm();
+    </script>
+}
+
+
+
+
+
+

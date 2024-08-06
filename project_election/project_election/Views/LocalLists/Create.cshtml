@@ -1,0 +1,59 @@
+﻿@model project_election.Models.LocalList
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <section class="h-100 bg-dark">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col">
+                    <div class="card card-registration my-4">
+                        <div class="row g-0">
+                            <div class="col-xl-6 d-none d-xl-block">
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
+                                     alt="Sample photo" class="img-fluid"
+                                     style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="card-body p-md-5 text-black">
+                                    <h3 class="mb-5 text-uppercase">نموذج تسجيل قائمه</h3>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div data-mdb-input-init class="form-outline">
+                                                @Html.TextBoxFor(m => m.ListName, new { @class = "form-control form-control-lg" })
+                                                @Html.LabelFor(m => m.ListName, new { @class = "form-label" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div data-mdb-input-init class="form-outline">
+                                                @Html.TextBoxFor(m => m.ElectionArea, new { @class = "form-control form-control-lg" })
+                                                @Html.LabelFor(m => m.ElectionArea, new { @class = "form-label" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            @Html.DropDownListFor(m => m.Governorate, new List<SelectListItem>
+                                            {
+                                                new SelectListItem { Text = "City", Value = "City" },
+                                                new SelectListItem { Text = "عجلون", Value = "عجلون" },
+                                                new SelectListItem { Text = "اربد", Value = "اربد" },
+                                                new SelectListItem { Text = "جرش ", Value = "جرش" }
+                                            }, new { @class = "form-control form-control-lg" })
+                                            @Html.LabelFor(m => m.Governorate, new { @class = "form-label" })
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary btn-lg">Next</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}

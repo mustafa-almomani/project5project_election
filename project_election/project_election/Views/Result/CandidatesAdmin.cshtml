@@ -1,0 +1,148 @@
+﻿@model IEnumerable<project_election.Models.LocalListCandidate>
+
+@{
+    ViewBag.Title = "Candidates";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Optional custom styles -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container mt-4">
+        <h2>Candidates</h2>
+        <table class="table align-middle mb-0 bg-white">
+            <thead class="bg-light">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Name Of List</th>
+                    <th scope="col">Status</th>
+                    <th>Sucess</th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int? id = Session["id"] as int?;
+
+                    var electionArea1 = Model.FirstOrDefault()?.ElectionArea;
+                    var filteredCandidates1 = Model.Where(c => c.LocalListingID == id && c.ElectionArea == electionArea1 && c.typeofCandidates=="تنافس");
+                }
+                @if (filteredCandidates1.Any())
+                {
+                    foreach (var item in filteredCandidates1)
+                    {
+                        <tr>
+
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="https://mdbootstrap.com/img/new/avatars/8.jpg"
+                                         alt="John Doe"
+                                         style="width: 45px; height: 45px;"
+                                         class="rounded-circle" />
+                                    <div class="ms-3">
+                                        <p class="fw-bold mb-1">@item.CandidateName</p>
+
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>
+                                <p class="fw-normal mb-1">@Session["listName"]</p>
+                                <p class="text-muted mb-0">@item.Governorate</p>
+                            </td>
+                            <td>
+                                <span class="badge bg-success text-light rounded-pill">compete</span>
+                            </td>
+                            <td>@item.Sucess</td>
+
+
+                        </tr>
+                    }
+                }
+                @{
+                    var electionArea = Model.FirstOrDefault()?.ElectionArea;
+                    var filteredCandidates = Model.Where(c => c.Gender == "female" && c.ElectionArea == electionArea);
+                }
+                @if (filteredCandidates.Any())
+                {
+                    foreach (var item in filteredCandidates)
+                    {
+
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="https://mdbootstrap.com/img/new/avatars/6.jpg"
+                                         alt="Alex Ray"
+                                         style="width: 45px; height: 45px;"
+                                         class="rounded-circle" />
+                                    <div class="ms-3">
+                                        <p class="fw-bold mb-1">@item.CandidateName</p>
+
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p class="fw-normal mb-1">@Session["listName"]</p>
+                                <p class="text-muted mb-0">@item.Governorate</p>
+                            </td>
+                            <td>
+                                <span class="badge bg-primary text-light rounded-pill">quota</span>
+                            </td>
+                            <td>@item.Sucess</td>
+                        </tr>
+                    }
+                }
+                @{
+
+                    var filteredCandidates2 = Model.Where(c => c.typeofCandidates=="مسيحي" && c.ElectionArea == electionArea);
+                }
+                @if (filteredCandidates2.Any())
+                {
+                    foreach (var item in filteredCandidates2)
+                    {
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="https://mdbootstrap.com/img/new/avatars/7.jpg"
+                                         alt="Kate Hunington"
+                                         style="width: 45px; height: 45px;"
+                                         class="rounded-circle" />
+                                    <div class="ms-3">
+                                        <p class="fw-bold mb-1">@item.CandidateName</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p class="fw-normal mb-1">@Session["listName"]</p>
+                                <p class="text-muted mb-0">@item.Governorate</p>
+                            </td>
+                            <td>
+                                <span class="badge bg-warning text-dark rounded-pill">Christian</span>
+                            </td>
+                            <td>@item.Sucess</td>
+
+
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+</body>
+</html>

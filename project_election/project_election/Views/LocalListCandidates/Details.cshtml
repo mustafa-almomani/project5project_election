@@ -1,0 +1,74 @@
+﻿@model project_election.Models.LocalListCandidate
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>LocalListCandidate</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CandidateName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CandidateName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NationalNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NationalNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Governorate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Governorate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ElectionArea)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ElectionArea)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOfVotesCandidate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfVotesCandidate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocalListingID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocalListingID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.typeofCandidates)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.typeofCandidates)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CandidateID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

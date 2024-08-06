@@ -1,0 +1,78 @@
+﻿@model IEnumerable<project_election.Models.GeneralListCandidate>
+@{
+    ViewBag.Title = "GeneralListCandidates";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GeneralListCandidates</h2>
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Optional custom styles -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container mt-4">
+        <h2>Candidates</h2>
+        <table class="table align-middle mb-0 bg-white">
+            <thead class="bg-light">
+                <tr>
+                    <th scope="col">Name</th>
+
+                    <th>Sucess</th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img src="https://mdbootstrap.com/img/new/avatars/8.jpg"
+                                     alt="John Doe"
+                                     style="width: 45px; height: 45px;"
+                                     class="rounded-circle" />
+                                <div class="ms-3">
+                                    <p class="fw-bold mb-1">@item.CandidateName</p>
+
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+
+                            <p class="text-muted mb-0">@item.Sucess</p>
+                        </td>
+
+
+
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+

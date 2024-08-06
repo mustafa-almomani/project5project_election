@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "نوع الانتخابات";
+    string localListAction = ViewBag.LocalElectionsPath;
+    string partyListAction = ViewBag.PartyElections;
+    bool isLocalActive = localListAction != null;
+    bool isPartyActive = partyListAction != null;
+    bool areBothInactive = !isLocalActive && !isPartyActive;
+}
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .active-card {
+            border: 2px solid #28a745; /* Green border for active card */
+            background-color: #e9f5e9; /* Light green background for active card */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow */
+            pointer-events: auto;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .inactive-card {
+            border: 1px solid #ced4da; /* Gray border for inactive card */
+            background-color: #f8f9fa; /* Light gray background */
+            pointer-events: none;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        .card {
+            text-align: center;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+            .card:hover {
+                transform: scale(1.05);
+            }
+
+            .card a {
+                color: inherit;
+                text-decoration: none;
+            }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+
+        .card-text {
+            color: #6c757d; /* Muted text color */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">نوع الانتخابات</h2>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <a href="@Url.Action(localListAction, "user")" class="card @((isLocalActive) ? "active-card" : "inactive-card")">
+                    <div class="card-body">
+                        <h5 class="card-title">الانتخابات المحلية</h5>
+                        <p class="card-text">صوت لممثليك المحليين.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6 mb-4">
+                <a href="@Url.Action(partyListAction, "user")" class="card @((isPartyActive) ? "active-card" : "inactive-card")">
+                    <div class="card-body">
+                        <h5 class="card-title">انتخابات الأحزاب</h5>
+                        <p class="card-text">صوت لممثلي حزبك.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var areBothInactive = @areBothInactive.ToString().ToLower();
+            if (areBothInactive) {
+                Swal.fire({
+                    title: 'اكتمل عملية التصويت',
+                    text: 'لقد أكملت عملية التصويت. شكراً لك!',
+                    icon: 'info',
+                    confirmButtonText: 'موافق'
+                });
+            }
+        });
+    </script>
+</body>
+</html>
